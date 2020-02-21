@@ -1,0 +1,63 @@
+﻿@inject IJSRuntime JSRuntime
+
+<style>
+    /*set the height to auto if form-control is used, otherwise it defaults to the bootstrap.min.css of 34px*/
+    .form-control {
+        height: auto;
+    }
+</style>
+
+<div id="@DivID" contenteditable="true" @attributes="DivAttributes" />
+
+@code {
+
+    [Parameter]
+    public string BoundValue { get; set; }
+
+    [Parameter]
+    public string CSSClass { get; set; }
+
+    [Parameter]
+    public string CSSStyle { get; set; }
+
+    [Parameter]
+    public EventCallback<string> TextUpdated { get; set; }
+
+    protected string TextToDisplay { get; set; }
+    private Random DivIDGenerator { get; set; } = new Random();
+    private int DivID { get; set; }
+    private Dictionary<string, object> DivAttributes = new Dictionary<string, object>();
+
+    protected override void OnInitialized()
+    {
+        DivID = DivIDGenerator.Next();
+        TextToDisplay = string.IsNullOrWhiteSpace(BoundValue) ? "" : BoundValue.Replace(Environment.NewLine, "<br />");
+
+        //add css class if supplied
+        if (!string.IsNullOrWhiteSpace(CSSClass))
+        {
+            DivAttributes.Add("class", CSSClass);
+        }
+
+        //include display:inline-block in div style (to prevent Enter from creating new divs in the contenteditable div)
+        CSSStyle = string.IsNullOrWhiteSpace(CSSStyle) ? "display:inline-block;" : ("display:inline-block;" + CSSStyle);
+        DivAttributes.Add("style", CSSStyle);
+    }
+
+    //send initial text (if any) to javascript to place in the div
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JSRuntime.InvokeAsync<string>("BlazorContentEditable", DivID, DotNetObjectReference.Create(this), TextToDisplay);
+        }
+    }
+
+    //receive input text from javascript and invoke callback to parent component
+    [JSInvokable]
+    public void GetUpdatedTextFromJavascript(string TextFromJavascript)
+    {
+        TextUpdated.InvokeAsync(TextFromJavascript);
+    }
+
+}
