@@ -4,10 +4,10 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <RazorLangVersion>3.0</RazorLangVersion>
     <PackageId>BlazorContentEditable</PackageId>
-    <Version>1.1.0</Version>
+    <Version>1.2.0</Version>
     <Authors>Eric Austin</Authors>
     <Company />
-    <Product />
+    <Product>BlazorContentEditable</Product>
     <Copyright>Copyright 2020 (c) Eric Austin. All rights reserved.</Copyright>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/austineric/BlazorContentEditable</PackageProjectUrl>

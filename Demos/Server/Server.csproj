@@ -5,8 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Source\Source.csproj" />
-    <ProjectReference Include="..\..\Source\Source_old.csproj" />
+    <ProjectReference Include="..\..\Source\BlazorContentEditable.Source.csproj" />
   </ItemGroup>
 
 </Project>

@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Server", "Demos\Server\Serv
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebAssembly", "Demos\WebAssembly\WebAssembly.csproj", "{E8129DF7-87DE-4A2D-A2CD-085434795A3E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Source", "Source\Source.csproj", "{493481AB-0C2E-40E3-B200-3C5D564AF1AE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorContentEditable.Source", "Source\BlazorContentEditable.Source.csproj", "{493481AB-0C2E-40E3-B200-3C5D564AF1AE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
