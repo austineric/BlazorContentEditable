@@ -2,15 +2,6 @@
 @inject NavigationManager NavigationManager
 
 
-<h2>Prefill text</h2>
-<select class="form-control col-2" @onchange="@((e) => SetPrefilledText(e))">
-    <option value="None" selected="@(PrefilledTextMode == "None")">None</option>
-    <option value="SingleLine" selected="@(PrefilledTextMode == "SingleLine")">Single line</option>
-    <option value="MultiLine" selected="@(PrefilledTextMode == "MultiLine")">Multi line</option>
-</select>
-
-<br />
-
 <h2>Content editable</h2>
 <BlazorContentEditableComponent InitialText="@Text" UpdatedText="@(UpdatedText => Text = UpdatedText)" CSSClass="form-control" />
 
@@ -23,45 +14,14 @@
 @code {
 
     private string Text { get; set; }
-    private string PrefilledTextMode { get; set; }
 
     protected override void OnInitialized()
     {
-        if (NavigationManager.Uri.Contains("?noprefill"))
-        {
-            PrefilledTextMode = "None";
-            Text = "";
-        }
-        else if (NavigationManager.Uri.Contains("?singleline"))
-        {
-            PrefilledTextMode = "SingleLine";
-            Text = "Welcome to BlazorContentEditable!";
-        }
-        else
-        {
-            PrefilledTextMode = "MultiLine";
-            Text = $"Welcome to BlazorContentEditable!{Environment.NewLine}" +
-                $"Features:{Environment.NewLine}" +
-                $"-Automatically sizes to prefilled text{Environment.NewLine}" +
-                $"-Automatically sizes to to text as it's typed{Environment.NewLine}" +
-                $"-Properly handles whitespace characters";
-        }
-    }
-
-    private void SetPrefilledText(ChangeEventArgs a)
-    {
-        if (a.Value.ToString() == "None")
-        {
-            NavigationManager.NavigateTo("/?noprefill", forceLoad: true);
-        }
-        else if (a.Value.ToString() == "SingleLine")
-        {
-            NavigationManager.NavigateTo("/?singleline", forceLoad: true);
-        }
-        else if (a.Value.ToString() == "MultiLine")
-        {
-            NavigationManager.NavigateTo("/", forceLoad: true);
-        }
+        Text = $"Welcome to BlazorContentEditable!{Environment.NewLine}" +
+            $"Features:{Environment.NewLine}" +
+            $"-Automatically sizes to prefilled text{Environment.NewLine}" +
+            $"-Automatically sizes to to text as it's typed{Environment.NewLine}" +
+            $"-Properly handles whitespace characters";
     }
 
 }
