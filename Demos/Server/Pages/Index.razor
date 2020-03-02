@@ -1,0 +1,27 @@
+﻿@page "/"
+@inject NavigationManager NavigationManager
+
+
+<h2>Content editable</h2>
+<BlazorContentEditableComponent InitialText="@Text" UpdatedText="@(UpdatedText => Text = UpdatedText)" CSSClass="form-control" />
+
+<br />
+<br />
+
+<h2>Blazor receiving content editable text</h2>
+<pre>@Text</pre>
+
+@code {
+
+    private string Text { get; set; }
+
+    protected override void OnInitialized()
+    {
+        Text = $"Welcome to BlazorContentEditable!{Environment.NewLine}" +
+            $"Features:{Environment.NewLine}" +
+            $"-Automatically sizes to prefilled text{Environment.NewLine}" +
+            $"-Automatically sizes to to text as it's typed{Environment.NewLine}" +
+            $"-Properly handles whitespace characters";
+    }
+
+}

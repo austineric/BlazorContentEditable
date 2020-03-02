@@ -12,7 +12,7 @@
 @code {
 
     [Parameter]
-    public string BoundValue { get; set; }
+    public string InitialText { get; set; }
 
     [Parameter]
     public string CSSClass { get; set; }
@@ -21,7 +21,7 @@
     public string CSSStyle { get; set; }
 
     [Parameter]
-    public EventCallback<string> TextUpdated { get; set; }
+    public EventCallback<string> UpdatedText { get; set; }
 
     protected string TextToDisplay { get; set; }
     private Random DivIDGenerator { get; set; } = new Random();
@@ -31,7 +31,7 @@
     protected override void OnInitialized()
     {
         DivID = DivIDGenerator.Next();
-        TextToDisplay = string.IsNullOrWhiteSpace(BoundValue) ? "" : BoundValue.Replace(Environment.NewLine, "<br />");
+        TextToDisplay = string.IsNullOrWhiteSpace(InitialText) ? "" : InitialText.Replace(Environment.NewLine, "<br />");
 
         //add css class if supplied
         if (!string.IsNullOrWhiteSpace(CSSClass))
@@ -57,7 +57,7 @@
     [JSInvokable]
     public void GetUpdatedTextFromJavascript(string TextFromJavascript)
     {
-        TextUpdated.InvokeAsync(TextFromJavascript);
+        UpdatedText.InvokeAsync(TextFromJavascript);
     }
 
 }
