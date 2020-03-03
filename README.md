@@ -6,7 +6,6 @@ A contenteditable component for Blazor
 
 - Automatically sizes to prefilled text
 - Automatically sizes to to text as it's typed
-- Properly handles whitespace characters
 
 # Installation
 nuget
