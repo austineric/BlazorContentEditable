@@ -8,7 +8,7 @@ A contenteditable component for Blazor
 - Automatically sizes to to text as it's typed
 
 # Installation
-nuget
+Include NuGet package from https://www.nuget.org/packages/BlazorContentEditable/
 
 # Setup
 ### Blazor WebAssembly
