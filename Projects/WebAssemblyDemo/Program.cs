@@ -5,7 +5,7 @@ using System.Text;
 using Microsoft.AspNetCore.Blazor.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace WebAssembly
+namespace WebAssemblyDemo
 {
     public class Program
     {
