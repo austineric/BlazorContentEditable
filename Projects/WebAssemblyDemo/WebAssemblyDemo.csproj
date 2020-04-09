@@ -13,8 +13,4 @@
     <PackageReference Include="BlazorContentEditable" Version="1.3.0" />
   </ItemGroup>
 
-  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="dotnet publish --no-build --configuration Release&#xD;&#xA;pwsh.exe -Command Copy-Item -Path &quot;.\bin\Release\netstandard2.1\publish\WebAssemblyDemo\dist\*&quot; -Destination &quot;..\..\docs&quot; -Exclude &quot;index.html&quot; -Recurse -Force" />
-  </Target>
-
 </Project>
