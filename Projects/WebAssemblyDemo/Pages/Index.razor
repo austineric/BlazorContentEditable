@@ -1,6 +1,13 @@
 ﻿@page "/"
 @inject NavigationManager NavigationManager
 
+<div class="d-flex justify-content-between align-items-center">
+    <h2>Content editable</h2>
+    <div class="d-flex align-items-center">
+        <a href="https://github.com/austineric/BlazorContentEditable" class="pr-2"><img src="https://raw.githubusercontent.com/austineric/StaticAssets/master/GitHub-Mark-32px.png" /></a>
+        <a href="https://github.com/austineric/BlazorContentEditable">View on GitHub</a>
+    </div>
+</div>
 
 <h2>Content editable</h2>
 <BlazorContentEditableComponent InitialText="@Text" UpdatedText="@(UpdatedText => Text = UpdatedText)" CSSClass="form-control" />
@@ -19,9 +26,9 @@
     {
         Text = $"Welcome to BlazorContentEditable!{Environment.NewLine}" +
             $"Features:{Environment.NewLine}" +
-            $"-Automatically sizes to prefilled text{Environment.NewLine}" +
-            $"-Automatically sizes to to text as it's typed{Environment.NewLine}" +
-            $"-Properly handles whitespace characters";
+            $"- Automatically sizes to prefilled text{Environment.NewLine}" +
+            $"- Automatically sizes to to text as it's typed{Environment.NewLine}" +
+            $"- https://github.com/austineric/BlazorContentEditable";
     }
 
 }
