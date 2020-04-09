@@ -9,6 +9,7 @@
     </div>
 </div>
 
+<h2>Content editable</h2>
 <BlazorContentEditableComponent InitialText="@Text" UpdatedText="@(UpdatedText => Text = UpdatedText)" CSSClass="form-control" />
 
 <br />
@@ -24,6 +25,7 @@
     protected override void OnInitialized()
     {
         Text = $"Welcome to BlazorContentEditable!{Environment.NewLine}" +
+            $"Features:{Environment.NewLine}" +
             $"- Automatically sizes to prefilled text{Environment.NewLine}" +
             $"- Automatically sizes to to text as it's typed{Environment.NewLine}" +
             $"- https://github.com/austineric/BlazorContentEditable";
