@@ -15,6 +15,10 @@ jobs:
     - name: Run dotnet publish
       run: dotnet publish ".\Projects\WebAssemblyDemo\WebAssemblyDemo.csproj" --configuration Release
 
+    #create docs directory if it does not exist
+    - name: Create docs directory if it does not exist
+      run: if (-not (Test-Path -Path ".\docs") { New-Item -Path ".\docs" -ItemType Directory} )
+
     #copy files to docs directory
     - name: Copy files to docs directory
       run: Copy-Item -Path ".\Projects\WebAssemblyDemo\bin\Release\netstandard2.1\publish\WebAssemblyDemo\dist\*" -Destination ".\docs" -Recurse -Force
