@@ -17,7 +17,11 @@ jobs:
 
     #copy files to docs directory
     - name: Copy files to docs directory
-      run: Copy-Item -Path ".\Projects\WebAssemblyDemo\bin\Release\netstandard2.1\publish\WebAssemblyDemo\dist\*" -Destination ".\docs" -Exclude "index.html" -Recurse -Force
+      run: Copy-Item -Path ".\Projects\WebAssemblyDemo\bin\Release\netstandard2.1\publish\WebAssemblyDemo\dist\*" -Destination ".\docs" -Recurse -Force
+
+    #update base reference in index.html
+    - name: Update base reference in index.html
+      run: Set-Content -Path ".\docs\index.html" -Value ((Get-Content -Path ".\docs\index.html" -Raw).Replace('<base href="/" />', '<base href="/BlazorContentEditable/" />'))
 
     #commit back to repo
     - uses: stefanzweifel/git-auto-commit-action@v4.1.2
