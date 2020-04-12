@@ -1,5 +1,5 @@
 
-[Demo site here](https://blazorcontenteditable.z19.web.core.windows.net/)
+### [Demo site here](https://austineric.github.io/BlazorContentEditable/)
 
 # BlazorContentEditable
 A contenteditable component for Blazor
