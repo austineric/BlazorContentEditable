@@ -1,0 +1,20 @@
+# This is a basic workflow to help you get started with Actions
+
+name: CI
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Run dotnet publish
+      run: dotnet publish ".\Projects\WebAssemblyDemo\WebAssemblyDemo.csproj" --configuration Release
+
+    - name: Copy files to docs directory
+      run: Copy-Item -Path ".\Projects\WebAssemblyDemo\bin\Release\netstandard2.1\publish\WebAssemblyDemo\dist\*" -Destination ".\docs" -Exclude "index.html" -Recurse -Force
