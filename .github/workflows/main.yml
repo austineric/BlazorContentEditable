@@ -11,8 +11,16 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
+    #publish project
     - name: Run dotnet publish
-      run: dotnet publish ".\Projects\WebAssemblyDemo\WebAssemblyDemo.csproj" --configuration Release
+      run: dotnet publish "/Projects/WebAssemblyDemo/WebAssemblyDemo.csproj" --configuration Release
 
+    #copy files to docs directory
     - name: Copy files to docs directory
       run: Copy-Item -Path ".\Projects\WebAssemblyDemo\bin\Release\netstandard2.1\publish\WebAssemblyDemo\dist\*" -Destination ".\docs" -Exclude "index.html" -Recurse -Force
+
+    #commit back to repo
+    - uses: stefanzweifel/git-auto-commit-action@v4.1.2
+      with:
+        commit_message: Automatically publish site
+      
