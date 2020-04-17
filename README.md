@@ -23,10 +23,12 @@ Include NuGet package from https://www.nuget.org/packages/BlazorContentEditable/
 `<BlazorContentEditableComponent InitialText="@Text" UpdatedText="@(UpdatedText => Text = UpdatedText)" />`
 
 Notes:
+* **InitialText** - (optional) include if placeholder text or prefilled text (ie from a database) should be displayed
+* **UpdatedText** - an event callback from the component containing the text as it gets entered by the user, in the example above `UpdatedText="@(UpdatedText => Text = UpdatedText)"` "Text" should be replaced by whichever property you want to receive the updated text
 * **CSSClass** - (optional) add css classes
 * **CSSStyle** - (optional) add css styles
-* **InitialText** - (optional) include if placeholder text or prefilled text (ie from a database) should be displayed
-* **UpdatedText** is an event callback from the component containing the text as it gets entered by the user, in the example above `UpdatedText="@(UpdatedText => Text = UpdatedText)"` "Text" should be replaced by whichever property you want to receive the updated text
+* **Disabled** - (optional) boolean which allows the component to be disabled ie Disabled="true" or conditionally disabled ie Disabled="@(UserIsAuthorized ? false : true)"
+* **DisabledBackgroundColor** - (optional) allows customizing of the disabled div color (defaults to lightgray if not set)
 
 # Releases
 ### 1.4.0
