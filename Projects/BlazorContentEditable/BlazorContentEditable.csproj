@@ -13,6 +13,7 @@
     <PackageProjectUrl>https://github.com/austineric/BlazorContentEditable</PackageProjectUrl>
     <PackageTags>Blazor Content-Editable ContentEditable</PackageTags>
     <Description>A contenteditable component for Blazor</Description>
+    <PackageReleaseNotes>See https://github.com/austineric/BlazorContentEditable</PackageReleaseNotes>
   </PropertyGroup>
 
 
