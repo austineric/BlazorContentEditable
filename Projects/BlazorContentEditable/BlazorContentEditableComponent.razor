@@ -7,7 +7,7 @@
     }
 </style>
 
-<div id="@DivID" contenteditable="true" @attributes="DivAttributes" />
+<div id="@DivID" contenteditable="@(Disabled ? false : true)" @attributes="DivAttributes" />
 
 @code {
 
@@ -21,35 +21,59 @@
     public string CSSStyle { get; set; }
 
     [Parameter]
+    public bool Disabled { get; set; }
+
+    [Parameter]
+    public string DisabledBackgroundColor { get; set; }
+
+    [Parameter]
     public EventCallback<string> UpdatedText { get; set; }
 
-    protected string TextToDisplay { get; set; }
-    private Random DivIDGenerator { get; set; } = new Random();
+    private string TextToDisplay { get; set; }
+    private Random RandomNumberGenerator { get; set; } = new Random();
     private int DivID { get; set; }
     private Dictionary<string, object> DivAttributes = new Dictionary<string, object>();
 
     protected override void OnInitialized()
     {
-        DivID = DivIDGenerator.Next();
+        DivID = RandomNumberGenerator.Next();
         TextToDisplay = string.IsNullOrWhiteSpace(InitialText) ? "" : InitialText.Replace(Environment.NewLine, "<br />");
 
-        //add css class if supplied
+        //add disply:inline-block to CSSStyle (to prevent Enter from creating new divs in the contenteditable div)
+        CSSStyle = "display:inline-block;" + CSSStyle;
+
+        //handle Disabled
+        if (Disabled)
+        {
+            //remove background-color if supplied
+            if (CSSStyle.Contains("background-color"))
+            {
+                List<string> SplitCSSStyle = CSSStyle.Split(';').ToList();
+                SplitCSSStyle.RemoveAll(Style => Style.Trim().StartsWith("background-color"));
+                CSSStyle = string.Join(";", SplitCSSStyle);
+            }
+
+            //add DisabledBackgroundColor (default to lightgray if DisabledBackgroundColor was not supplied)
+            CSSStyle = CSSStyle + $"background-color:{DisabledBackgroundColor ?? "lightgray"}";
+        }
+
+        //add CSSClass if supplied
         if (!string.IsNullOrWhiteSpace(CSSClass))
         {
             DivAttributes.Add("class", CSSClass);
         }
 
-        //include display:inline-block in div style (to prevent Enter from creating new divs in the contenteditable div)
-        CSSStyle = string.IsNullOrWhiteSpace(CSSStyle) ? "display:inline-block;" : ("display:inline-block;" + CSSStyle);
+        //add CSSStyle
         DivAttributes.Add("style", CSSStyle);
+
     }
 
-    //send initial text (if any) to javascript to place in the div
+    //send initial text (if supplied) to javascript to place in the div
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender)
         {
-            await JSRuntime.InvokeAsync<string>("BlazorContentEditable", DivID, DotNetObjectReference.Create(this), TextToDisplay);
+            await JSRuntime.InvokeAsync<string>("BlazorContentEditable", DivID, DotNetObjectReference.Create(this), TextToDisplay, DisabledBackgroundColor);
         }
     }
 
