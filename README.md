@@ -29,5 +29,7 @@ Notes:
 * **UpdatedText** is an event callback from the component containing the text as it gets entered by the user, in the example above `UpdatedText="@(UpdatedText => Text = UpdatedText)"` "Text" should be replaced by whichever property you want to receive the updated text
 
 # Releases
+### 1.4.0
+* Can conditionally disable component
 ### 1.3.0
 * Use `@using BlazorContentEditable` in _Imports.razor instead of `@using BlazorContentEditable.Source`
