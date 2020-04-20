@@ -20,17 +20,20 @@ Include NuGet package from https://www.nuget.org/packages/BlazorContentEditable/
 * Add `<script src="_content/BlazorContentEditable/BlazorContentEditable.js"></script>` to Pages/_Host.cshtml
 
 # Usage
-`<BlazorContentEditableComponent InitialText="@Text" UpdatedText="@(UpdatedText => Text = UpdatedText)" />`
+`<BlazorContentEditableComponent @bind-Value="Text" />`
 
 Notes:
-* **InitialText** - (optional) include if placeholder text or prefilled text (ie from a database) should be displayed
-* **UpdatedText** - an event callback from the component containing the text as it gets entered by the user, in the example above `UpdatedText="@(UpdatedText => Text = UpdatedText)"` "Text" should be replaced by whichever property you want to receive the updated text
+* **@bind-Value** - the property to which the component should be bound
+* **Enabled** - (optional, defaults to true) - allows the component to be disabled directly `Enabled="false"` or conditionally `Enabled="@UserIsAuthorized ? true : false"`
 * **CSSClass** - (optional) add css classes
 * **CSSStyle** - (optional) add css styles
-* **Disabled** - (optional) boolean which allows the component to be disabled ie Disabled="true" or conditionally disabled ie Disabled="@(UserIsAuthorized ? false : true)"
-* **DisabledBackgroundColor** - (optional) allows customizing of the disabled div color (defaults to lightgray if not set)
+* **Rows** - (optional, defaults to 1) allows setting the number of rows (height) the component should display if no text is present
+* **Columns** - (optional) sets the number of columns (width) for the component (1 column = 1 average-width character)
+* **Width** - (optional, defaults to 100% if neither Columns nor Width are set) sets the width of the component with CSS
 
 # Releases
+### 2.0.0
+* Changed to auto-resizing TextArea
 ### 1.4.0
 * Can conditionally disable component
 ### 1.3.0
