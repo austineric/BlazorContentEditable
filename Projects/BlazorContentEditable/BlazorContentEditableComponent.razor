@@ -5,7 +5,10 @@
 @code {
 
     [Parameter]
-    public string InitialText { get; set; }
+    public string Value { get; set; }
+
+    [Parameter]
+    public bool Enabled { get; set; } = true;   //default to true
 
     [Parameter]
     public string CSSClass { get; set; }
@@ -23,21 +26,15 @@
     public string Width { get; set; }
 
     [Parameter]
-    public bool Disabled { get; set; }
-
-    [Parameter]
-    public EventCallback<string> UpdatedText { get; set; }
+    public EventCallback<string> ValueChanged { get; set; }
 
     //component elements
-    private string TextToDisplay { get; set; }
     private Random RandomNumberGenerator { get; set; } = new Random();
-    private int DivID { get; set; }
+    private int DivID { get; set; } = new Random().Next();
     private Dictionary<string, object> AttributesList = new Dictionary<string, object>();
 
     protected override void OnInitialized()
     {
-        DivID = RandomNumberGenerator.Next();
-        TextToDisplay = string.IsNullOrWhiteSpace(InitialText) ? "" : InitialText;
 
         //add Rows if supplied, default to 1 if not supplied
         AttributesList.Add("rows", Rows == 0 ? 1 : Rows);
@@ -59,8 +56,8 @@
             CSSStyle = CSSStyle + "width:100%;";
         }
 
-        //add disabled if supplied
-        if (Disabled)
+        //Enabled=false add disabled attribute to AttributesList
+        if (!Enabled)
         {
             AttributesList.Add("disabled", "disabled");
         }
@@ -73,6 +70,7 @@
 
         //add CSSStyle
         AttributesList.Add("style", CSSStyle);
+    
     }
 
     //send initial text (if supplied) to javascript to place in the div
@@ -80,7 +78,7 @@
     {
         if (firstRender)
         {
-            await JSRuntime.InvokeAsync<string>("BlazorContentEditable", DivID, DotNetObjectReference.Create(this), TextToDisplay);
+            await JSRuntime.InvokeAsync<string>("BlazorContentEditable", DivID, DotNetObjectReference.Create(this), Value);
         }
     }
 
@@ -88,7 +86,7 @@
     [JSInvokable]
     public void GetUpdatedTextFromJavascript(string TextFromJavascript)
     {
-        UpdatedText.InvokeAsync(TextFromJavascript);
+        ValueChanged.InvokeAsync(TextFromJavascript);
     }
 
 }
