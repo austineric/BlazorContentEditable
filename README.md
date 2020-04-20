@@ -22,7 +22,7 @@ Include NuGet package from https://www.nuget.org/packages/BlazorContentEditable/
 # Usage
 `<BlazorContentEditableComponent @bind-Value="Text" />`
 
-Notes:
+### Notes:
 * **@bind-Value** - the property to which the component should be bound
 * **Enabled** - (optional, defaults to true) - allows the component to be disabled directly `Enabled="false"` or conditionally `Enabled="@UserIsAuthorized ? true : false"`
 * **CSSClass** - (optional) add css classes
