@@ -44,6 +44,9 @@ Try {
         Throw "nuget push did not return a success code of 0"
     }
 
+    Write-Host "Opening NuGet page..."
+    Start-Process "https://www.nuget.org/packages/BlazorContentEditable/"
+
     Write-Host "Success"
 
 }
