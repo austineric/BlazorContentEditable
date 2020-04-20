@@ -2,7 +2,7 @@
 ### [Demo site here](https://austineric.github.io/BlazorContentEditable/)
 
 # BlazorContentEditable
-A component providing contenteditable functionality for Blazor
+Providing contenteditable functionality for Blazor
 
 - Automatically sizes to prefilled text
 - Automatically sizes to to text as it's typed
