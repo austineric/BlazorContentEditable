@@ -1,13 +1,6 @@
 ﻿@inject IJSRuntime JSRuntime
 
-<style>
-    /*set the height to auto if form-control is used, otherwise it defaults to the bootstrap.min.css of 34px*/
-    .form-control {
-        height: auto;
-    }
-</style>
-
-<div id="@DivID" contenteditable="@(Disabled ? false : true)" @attributes="DivAttributes" />
+<textarea id="@DivID" @attributes="AttributesList" ></textarea>
 
 @code {
 
@@ -21,51 +14,65 @@
     public string CSSStyle { get; set; }
 
     [Parameter]
-    public bool Disabled { get; set; }
+    public int Rows { get; set; }
 
     [Parameter]
-    public string DisabledBackgroundColor { get; set; }
+    public int Columns { get; set; }
+
+    [Parameter]
+    public string Width { get; set; }
+
+    [Parameter]
+    public bool Disabled { get; set; }
 
     [Parameter]
     public EventCallback<string> UpdatedText { get; set; }
 
+    //component elements
     private string TextToDisplay { get; set; }
     private Random RandomNumberGenerator { get; set; } = new Random();
     private int DivID { get; set; }
-    private Dictionary<string, object> DivAttributes = new Dictionary<string, object>();
+    private Dictionary<string, object> AttributesList = new Dictionary<string, object>();
 
     protected override void OnInitialized()
     {
         DivID = RandomNumberGenerator.Next();
-        TextToDisplay = string.IsNullOrWhiteSpace(InitialText) ? "" : InitialText.Replace(Environment.NewLine, "<br />");
+        TextToDisplay = string.IsNullOrWhiteSpace(InitialText) ? "" : InitialText;
 
-        //add disply:inline-block to CSSStyle (to prevent Enter from creating new divs in the contenteditable div)
-        CSSStyle = "display:inline-block;" + CSSStyle;
+        //add Rows if supplied, default to 1 if not supplied
+        AttributesList.Add("rows", Rows == 0 ? 1 : Rows);
 
-        //handle Disabled
+        //add overflow:hidden to prevent scrollbars from showing
+        CSSStyle = CSSStyle + "overflow:hidden;";
+
+        //set width
+        if (!string.IsNullOrWhiteSpace(Width))  //if Width  was supplied add to CSSStyle
+        {
+            CSSStyle = CSSStyle + Width;
+        }
+        else if (Columns != 0)  //if Columns was supplied add to AttributesList
+        {
+            AttributesList.Add("columns", Columns);
+        }
+        else    //if neither Width nor Columns was supplied set width to 100%
+        {
+            CSSStyle = CSSStyle + "width:100%;";
+        }
+
+        //add disabled if supplied
         if (Disabled)
         {
-            //remove background-color if supplied
-            if (CSSStyle.Contains("background-color"))
-            {
-                List<string> SplitCSSStyle = CSSStyle.Split(';').ToList();
-                SplitCSSStyle.RemoveAll(Style => Style.Trim().StartsWith("background-color"));
-                CSSStyle = string.Join(";", SplitCSSStyle);
-            }
-
-            //add DisabledBackgroundColor (default to lightgray if DisabledBackgroundColor was not supplied)
-            CSSStyle = CSSStyle + $"background-color:{DisabledBackgroundColor ?? "lightgray"}";
+            AttributesList.Add("disabled", "disabled");
         }
 
         //add CSSClass if supplied
         if (!string.IsNullOrWhiteSpace(CSSClass))
         {
-            DivAttributes.Add("class", CSSClass);
+            AttributesList.Add("class", CSSClass);
         }
 
         //add CSSStyle
-        DivAttributes.Add("style", CSSStyle);
-
+        AttributesList.Add("style", CSSStyle);
     }
 
     //send initial text (if supplied) to javascript to place in the div
@@ -73,7 +80,7 @@
     {
         if (firstRender)
         {
-            await JSRuntime.InvokeAsync<string>("BlazorContentEditable", DivID, DotNetObjectReference.Create(this), TextToDisplay, DisabledBackgroundColor);
+            await JSRuntime.InvokeAsync<string>("BlazorContentEditable", DivID, DotNetObjectReference.Create(this), TextToDisplay);
         }
     }
 

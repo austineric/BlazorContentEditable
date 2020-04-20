@@ -9,7 +9,8 @@
     </div>
 </div>
 
-<BlazorContentEditableComponent InitialText="@Text" UpdatedText="@(UpdatedText => Text = UpdatedText)" CSSClass="form-control" />
+@*<BlazorContentEditableComponent InitialText="@Text" UpdatedText="@(UpdatedText => Text = UpdatedText)" CSSClass="form-control" Rows="1" Columns="3" />*@
+<BlazorContentEditableComponent InitialText="@Text" UpdatedText="@(UpdatedText => Text = UpdatedText)" Rows="1" />
 
 <br />
 <br />
@@ -31,3 +32,4 @@
     }
 
 }
+
