@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="BlazorContentEditable" Version="1.4.0" />
+    <PackageReference Include="BlazorContentEditable" Version="2.0.0" />
   </ItemGroup>
 
 </Project>

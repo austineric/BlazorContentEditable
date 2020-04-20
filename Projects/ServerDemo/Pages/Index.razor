@@ -9,7 +9,7 @@
     </div>
 </div>
 
-<BlazorContentEditableComponent InitialText="@Text" UpdatedText="@(UpdatedText => Text = UpdatedText)" CSSClass="form-control" />
+<BlazorContentEditableComponent @bind-Value="Text" CSSClass="form-control" />
 
 <br />
 <br />
